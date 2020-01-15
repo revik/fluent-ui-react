@@ -1,5 +1,4 @@
 import {
-  callable,
   ComponentSlotStylesInput,
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
@@ -24,6 +23,7 @@ import {
   RendererRenderRule,
   StylesContextValue,
 } from '../styles/types'
+import { COMPOSE_DISPLAY_NAME_DELIMITER } from '../compose'
 
 type GetStylesOptions = StylesContextValue<{
   renderRule: RendererRenderRule
@@ -33,6 +33,9 @@ type GetStylesOptions = StylesContextValue<{
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
   rtl: boolean
   saveDebug: (debug: DebugData | null) => void
+
+  __experimental_composeName?: string
+  __experimental_overrideStyles?: boolean
 }
 
 export type GetStylesResult = {
@@ -52,22 +55,31 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     rtl,
     saveDebug,
     theme,
-    _internal_resolvedComponentVariables: resolvedComponentVariables,
+
+    __experimental_composeName,
+    __experimental_overrideStyles,
   } = options
 
+  const displayNames = __experimental_overrideStyles
+    ? [__experimental_composeName]
+    : __experimental_composeName
+    ? __experimental_composeName.split(COMPOSE_DISPLAY_NAME_DELIMITER)
+    : [displayName]
+
+  console.log('DISPLAYNAME', displayNames)
+
   // Resolve variables for this component, cache the result in provider
-  if (!resolvedComponentVariables[displayName]) {
-    resolvedComponentVariables[displayName] =
-      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
-  }
+  // if (!resolvedComponentVariables[displayName]) {
+  //   resolvedComponentVariables[displayName] =
+  //     callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+  // }
 
   // Merge inline variables on top of cached variables
-  const resolvedVariables = props.variables
-    ? mergeComponentVariables(
-        resolvedComponentVariables[displayName],
-        withDebugId(props.variables, 'props.variables'),
-      )(theme.siteVariables)
-    : resolvedComponentVariables[displayName]
+  const resolvedVariables = mergeComponentVariables(
+    // resolvedComponentVariables[displayName],
+    ...displayNames.map(displayName => theme.componentVariables[displayName]),
+    withDebugId(props.variables, 'props.variables'),
+  )(theme.siteVariables)
 
   const animationStyles = props.animation
     ? createAnimationStyles(props.animation, theme)
@@ -75,7 +87,8 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
+    // theme.componentStyles[displayName],
+    ...displayNames.map(displayName => theme.componentStyles[displayName]),
     props.design && withDebugId({ root: props.design }, 'props.design'),
     props.styles && withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     animationStyles && withDebugId({ root: animationStyles }, 'props.animation'),

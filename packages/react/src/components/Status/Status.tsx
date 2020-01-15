@@ -11,6 +11,7 @@ import {
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useComposedConfig,
 } from '@fluentui/react-bindings'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -34,24 +35,18 @@ export interface StatusProps extends UIComponentProps {
 
 const Status = React.forwardRef<HTMLDivElement, WithAsProp<StatusProps>>((props, ref) => {
   const { className, color, icon, size, state, design, styles, variables } = props
-  // @ts-ignore
-  const { displayName, mapPropsToBehavior, mapPropsToStyles, overrideStyles, shouldForwardProp } =
-    props.__unstable_config || {}
 
+  const compose = useComposedConfig(props)
   const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
-  const magicName = overrideStyles
-    ? displayName || Status.displayName
-    : [Status.displayName, displayName].filter(Boolean)
-  // @ts-ignore
-  // @ts-ignore
-  const [classes, resolvedStyles] = useStyles(magicName, {
+
+  const [classes, resolvedStyles] = useStyles(Status.displayName, {
     // magic name is not cool, too
     className: (Status as any).className,
     mapPropsToStyles: () => ({
       color,
       size,
       state,
-      ...(mapPropsToStyles && mapPropsToStyles(props)), // This is not cool
+      ...compose.styleProps,
     }),
     mapPropsToInlineStyles: () => ({
       className,
@@ -59,24 +54,20 @@ const Status = React.forwardRef<HTMLDivElement, WithAsProp<StatusProps>>((props,
       styles,
       variables,
     }),
-    // <CallMenu />
-    // <div className="call-menu my-custom-classname" />
     rtl,
 
-    // @ts-ignore
-    __experimental_variant: displayName,
-    __expirimental_overwrite: overrideStyles,
+    __experimental_composeName: compose.displayName,
+    __experimental_overrideStyles: compose.overrideStyles,
   })
   const getA11Props = useAccessibility(props.accessibility, {
-    debugName: displayName || Status.displayName,
-    mapPropsToBehavior: mapPropsToBehavior ? () => mapPropsToBehavior(props) : undefined,
+    debugName: compose.displayName || Status.displayName,
+    mapPropsToBehavior: () => compose.behaviorProps,
     rtl,
   })
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(
-    (Status as any).handledProps /* TODO */,
+    [...(Status as any).handledProps, ...compose.handledProps] /* TODO */,
     props,
-    shouldForwardProp,
   )
 
   // 1: shouldHandleProp should work!

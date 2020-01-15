@@ -3,6 +3,7 @@ import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as FluentUI from '@fluentui/react'
 import * as FluentBindings from '@fluentui/react-bindings'
+import * as FluentStyles from '@fluentui/styles'
 import * as ReactFela from 'react-fela'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -44,6 +45,10 @@ export const imports: Record<string, { version: string; module: any }> = {
   '@fluentui/react-bindings': {
     version: null,
     module: FluentBindings,
+  },
+  '@fluentui/styles': {
+    version: null,
+    module: FluentStyles,
   },
   classnames: {
     version: projectPackageJson.dependencies['classnames'],

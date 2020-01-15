@@ -21,4 +21,4 @@ export * from './styles/types'
 export { default as getElementType } from './utils/getElementType'
 export { default as getUnhandledProps } from './utils/getUnhandledProps'
 
-export { default as compose } from './compose'
+export { compose, useComposedConfig } from './compose'
