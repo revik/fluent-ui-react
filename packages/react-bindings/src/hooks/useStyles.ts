@@ -28,6 +28,11 @@ type UseStylesOptions<StyleProps extends PrimitiveProps> = {
   __experimental_overrideStyles?: boolean
 }
 
+type UseStylesResult = {
+  classes: ComponentSlotClasses
+  styles: ComponentSlotStylesPrepared
+}
+
 type InlineStyleProps<StyleProps> = {
   /** Additional CSS class name(s) to apply.  */
   className?: string
@@ -51,7 +56,7 @@ const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
 const useStyles = <StyleProps extends PrimitiveProps>(
   displayName: string,
   options: UseStylesOptions<StyleProps>,
-): [ComponentSlotClasses, ComponentSlotStylesPrepared] => {
+): UseStylesResult => {
   const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
     React.useContext(ThemeContext) || defaultContext
 
@@ -87,7 +92,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     __experimental_overrideStyles,
   })
 
-  return [classes, resolvedStyles]
+  return { classes, styles: resolvedStyles }
 }
 
 export default useStyles
