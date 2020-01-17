@@ -1,4 +1,10 @@
-import { getElementType, getUnhandledProps, useStyles } from '@fluentui/react-bindings'
+import {
+  ComposableProps,
+  getElementType,
+  getUnhandledProps,
+  useComposedConfig,
+  useStyles,
+} from '@fluentui/react-bindings'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -22,11 +28,13 @@ import {
 export interface BoxProps
   extends UIComponentProps<BoxProps>,
     ContentComponentProps,
-    ChildrenComponentProps {}
+    ChildrenComponentProps,
+    ComposableProps {}
 
 const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps> = props => {
   const { className, design, styles, variables, children, content } = props
 
+  const compose = useComposedConfig(props)
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { classes } = useStyles(Box.displayName, {
     className: Box.className,
@@ -35,8 +43,12 @@ const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps>
       design,
       styles,
       variables,
+      ...compose.styleProps,
     }),
     rtl: context.rtl,
+
+    __experimental_composeName: compose.displayName,
+    __experimental_overrideStyles: compose.overrideStyles,
   })
 
   const unhandledProps = getUnhandledProps(Box.handledProps, props)

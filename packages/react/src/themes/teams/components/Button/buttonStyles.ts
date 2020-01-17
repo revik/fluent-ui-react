@@ -224,30 +224,6 @@ const buttonStyles: ComponentSlotStylesPrepared<
     }
   },
 
-  // modifies the text of the button
-  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    fontSize: v.contentFontSize,
-    fontWeight: v.contentFontWeight,
-    lineHeight: v.contentLineHeight,
-
-    ...(p.size === 'small' && {
-      fontSize: v.sizeSmallContentFontSize,
-      lineHeight: v.sizeSmallContentLineHeight,
-    }),
-  }),
-
-  icon: ({ props: p, variables: v }) => ({
-    // when loading, hide the icon
-    ...(p.loading && {
-      margin: 0,
-      opacity: 0,
-      width: 0,
-    }),
-  }),
-
   loader: ({ props: p, variables: v }): ICSSInJSStyle => ({
     [`& .${Loader.slotClassNames.indicator}`]: {
       width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,

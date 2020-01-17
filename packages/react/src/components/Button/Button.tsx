@@ -23,7 +23,6 @@ import {
   rtlTextContainer,
   SizeValue,
 } from '../../utils'
-import Box, { BoxProps } from '../Box/Box'
 import Loader, { LoaderProps } from '../Loader/Loader'
 import {
   ComponentEventHandler,
@@ -35,10 +34,11 @@ import {
 } from '../../types'
 import ButtonGroup from './ButtonGroup'
 import ButtonIcon, { ButtonIconProps } from './ButtonIcon'
+import ButtonContent, { ButtonContentProps } from './ButtonContent'
 
 export interface ButtonProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue<BoxProps>>,
+    ContentComponentProps<ShorthandValue<ButtonContentProps>>,
     ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
@@ -172,6 +172,13 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
   const unhandledProps = getUnhandledProps(Button.handledProps, props)
   const ElementType = getElementType(props)
 
+  const renderContent = () => {
+    // @ts-ignore TODO pls fix me
+    return ButtonContent.create(content, {
+      defaultProps: () => getA11Props('content', { as: 'span', size }),
+    })
+  }
+
   const renderIcon = () => {
     // @ts-ignore
     return ButtonIcon.create(icon, {
@@ -225,10 +232,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
         <>
           {loading && renderLoader()}
           {iconPosition !== 'after' && renderIcon()}
-          {Box.create(content, {
-            defaultProps: () =>
-              getA11Props('content', { as: 'span', styles: resolvedStyles.content }),
-          })}
+          {renderContent()}
           {iconPosition === 'after' && renderIcon()}
         </>
       )}

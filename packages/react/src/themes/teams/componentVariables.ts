@@ -5,6 +5,7 @@ export { default as Alert } from './components/Alert/alertVariables'
 export { default as Avatar } from './components/Avatar/avatarVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
+export { default as ButtonContent } from './components/Button/buttonContentVariables'
 export { default as ButtonGroup } from './components/Button/buttonVariables'
 
 export { default as Chat } from './components/Chat/chatVariables'
