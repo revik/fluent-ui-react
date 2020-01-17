@@ -18,12 +18,12 @@ export const compose = <UserProps, CProps = {}>(
   Component: React.ComponentType<CProps>,
   options: ComposeOptions,
 ): React.ComponentType<CProps & UserProps> => {
-  const ComposedComponent = { ...Component }
+  const ComposedComponent = Component.bind(null)
 
   ComposedComponent.displayName = options.displayName
 
   // We are passing config via props by setting default prop value
-  ComposedComponent.defaultProps = { ...(ComposedComponent.defaultProps || {}) }
+  ComposedComponent.defaultProps = { ...(Component.defaultProps || {}) }
   // @ts-ignore TODO PLS FIX ME
   ComposedComponent.defaultProps[COMPOSE_CONFIG_PROP_NAME] = options
 
@@ -47,7 +47,7 @@ export const useComposedConfig = <P extends ComposableProps>(props: P) => {
     styleProps: mapPropsToStyles(props),
     className,
     displayName,
-    handledProps,
+    handledProps: handledProps.concat(['__unstable_config']),
     overrideStyles,
   }
 }

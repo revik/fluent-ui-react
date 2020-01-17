@@ -2,6 +2,7 @@ import { useSelectKnob, useStringKnob } from '@fluentui/docs-components'
 import {
   AvatarProps,
   BoxProps,
+  ButtonProps,
   DialogProps,
   DividerProps,
   EmbedProps,
@@ -26,6 +27,11 @@ export const Avatar: KnobComponentGenerators<AvatarProps> = {
 export const Box: KnobComponentGenerators<BoxProps> = {
   // TODO: fix support for boxes
   children: () => null,
+}
+
+export const Button: KnobComponentGenerators<ButtonProps> = {
+  // TODO: fix support for composed components
+  icon: () => null,
 }
 
 export const Dialog: KnobComponentGenerators<DialogProps> = {

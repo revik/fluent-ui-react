@@ -71,7 +71,10 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
     rtl,
   })
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps([...Status.handledProps, ...compose.handledProps], props)
+  const unhandledProps = getUnhandledProps(
+    [...Status.handledProps, ...compose.handledProps] as any,
+    props,
+  )
 
   return (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>

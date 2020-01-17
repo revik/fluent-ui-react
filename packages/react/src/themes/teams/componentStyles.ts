@@ -9,6 +9,7 @@ export { default as Attachment } from './components/Attachment/attachmentStyles'
 export { default as Avatar } from './components/Avatar/avatarStyles'
 
 export { default as Button } from './components/Button/buttonStyles'
+export { default as ButtonIcon } from './components/Button/buttonIconStyles'
 export { default as ButtonGroup } from './components/Button/buttonGroupStyles'
 
 export { default as Chat } from './components/Chat/chatStyles'
