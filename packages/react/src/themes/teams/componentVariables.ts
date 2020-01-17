@@ -69,6 +69,7 @@ export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Slider } from './components/Slider/sliderVariables'
 
 export { default as Status } from './components/Status/statusVariables'
+export { default as StatusIcon } from './components/Status/statusIconVariables'
 
 export { default as Text } from './components/Text/textVariables'
 

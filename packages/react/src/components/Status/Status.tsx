@@ -13,7 +13,6 @@ import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 
-import Icon, { IconProps } from '../Icon/Icon'
 import { createShorthandFactory, UIComponentProps, commonPropTypes, SizeValue } from '../../utils'
 import {
   WithAsProp,
@@ -22,6 +21,7 @@ import {
   ProviderContextPrepared,
   FluentComponentStaticProps,
 } from '../../types'
+import StatusIcon, { StatusIconProps } from './StatusIcon'
 
 export interface StatusProps extends UIComponentProps, ComposableProps {
   /** Accessibility behavior if overridden by the user. */
@@ -31,7 +31,7 @@ export interface StatusProps extends UIComponentProps, ComposableProps {
   color?: string
 
   /** Shorthand for the icon, to provide customizing status */
-  icon?: ShorthandValue<IconProps>
+  icon?: ShorthandValue<StatusIconProps>
 
   /** Size multiplier */
   size?: SizeValue
@@ -46,7 +46,7 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
   const compose = useComposedConfig(props)
   const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
 
-  const { classes, styles: resolvedStyles } = useStyles(Status.displayName, {
+  const { classes } = useStyles(Status.displayName, {
     className: Status.className,
     mapPropsToStyles: () => ({
       color,
@@ -76,16 +76,14 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
     props,
   )
 
+  // @ts-ignore
+  const iconElement = StatusIcon.create(icon, {
+    defaultProps: () => getA11Props('icon', { state }),
+  })
+
   return (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
-      {Icon.create(icon, {
-        defaultProps: () =>
-          getA11Props('icon', {
-            size: 'smallest',
-            styles: resolvedStyles.icon,
-            xSpacing: 'none',
-          }),
-      })}
+      {iconElement}
     </ElementType>
   )
 }

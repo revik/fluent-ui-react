@@ -83,6 +83,7 @@ export { default as Reaction } from './components/Reaction/reactionStyles'
 export { default as ReactionGroup } from './components/Reaction/reactionGroupStyles'
 
 export { default as Status } from './components/Status/statusStyles'
+export { default as StatusIcon } from './components/Status/statusIconStyles'
 
 export { default as SplitButton } from './components/SplitButton/splitButtonStyles'
 

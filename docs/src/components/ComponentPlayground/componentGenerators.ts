@@ -8,6 +8,7 @@ import {
   EmbedProps,
   IconProps,
   ImageProps,
+  StatusProps,
   VideoProps,
 } from '@fluentui/react'
 import * as _ from 'lodash'
@@ -83,6 +84,11 @@ export const Image: KnobComponentGenerators<ImageProps> = {
     name: propName,
     initialValue: faker.image.avatar(),
   }),
+}
+
+export const Status: KnobComponentGenerators<StatusProps> = {
+  // TODO: fix support for composed components
+  icon: () => null,
 }
 
 export const Video: KnobComponentGenerators<VideoProps> = {

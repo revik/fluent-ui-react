@@ -14,6 +14,7 @@ const ButtonIcon = compose(Icon, {
 
 // @ts-ignore
 ButtonIcon.create = createShorthandFactory({
+  // @ts-ignore
   Component: ButtonIcon,
   mappedProp: 'name',
   allowsJSX: false,

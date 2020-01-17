@@ -61,6 +61,7 @@ const componentsSrc = [
   `${paths.posix.packageSrc('react-bindings')}/FocusZone/[A-Z]!(*.types).tsx`,
   `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
   '!**/ButtonIcon.tsx',
+  '!**/StatusIcon.tsx',
 ]
 const behaviorSrc = [`${paths.posix.packageSrc('accessibility')}/behaviors/*/[a-z]*Behavior.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
