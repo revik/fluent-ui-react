@@ -2,7 +2,7 @@ import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 
 import { StatusIconProps } from '../../../../components/Status/StatusIcon'
 import { StatusIconVariables } from './statusIconVariables'
-import { pxToRem } from 'src/utils'
+import { pxToRem } from '../../../../utils'
 
 const getTextColor = (state: string, variables: StatusIconVariables) => {
   switch (state) {
