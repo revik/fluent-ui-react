@@ -22,7 +22,6 @@ import {
   RendererRenderRule,
   StylesContextValue,
 } from '../styles/types'
-import { COMPOSE_DISPLAY_NAME_DELIMITER } from '../compose'
 
 type GetStylesOptions = StylesContextValue<{
   renderRule: RendererRenderRule
@@ -54,36 +53,23 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     rtl,
     saveDebug,
     theme,
+    // TODO: Restore me PLZ
+    // _internal_resolvedComponentVariables: resolvedComponentVariables,
 
-    __experimental_composeName,
-    __experimental_overrideStyles,
+    __experimental_composeName: composeName, // Second displayName
+    __experimental_overrideStyles: overrideStyles,
   } = options
 
-  const displayNames = __experimental_overrideStyles
-    ? [__experimental_composeName]
-    : __experimental_composeName
-    ? __experimental_composeName.split(COMPOSE_DISPLAY_NAME_DELIMITER)
-    : [displayName]
-
-  console.log('DISPLAYNAME', displayNames)
-
-  // Resolve variables for this component, cache the result in provider
-  // if (!resolvedComponentVariables[displayName]) {
-  //   resolvedComponentVariables[displayName] =
-  //     callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
-  // }
-
-  // Merge inline variables on top of cached variables
   const resolvedVariables = mergeComponentVariables(
-    // resolvedComponentVariables[displayName],
-    ...displayNames.map(displayName => theme.componentVariables[displayName]),
+    theme.componentVariables[displayName],
+    composeName && theme.componentVariables[composeName],
     withDebugId(props.variables, 'props.variables'),
   )(theme.siteVariables)
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    // theme.componentStyles[displayName],
-    ...displayNames.map(displayName => theme.componentStyles[displayName]),
+    overrideStyles ? undefined : theme.componentStyles[displayName],
+    composeName ? theme.componentStyles[composeName] : undefined,
     props.design && withDebugId({ root: props.design }, 'props.design'),
     props.styles && withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
   )
