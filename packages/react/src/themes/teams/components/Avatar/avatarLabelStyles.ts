@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../utils'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
-import { AvatarProps } from '../../../../components/Avatar/Avatar'
+import { AvatarLabelProps } from '../../../../components/Avatar/AvatarLabel'
 
 const sizeToPxValue = {
   smallest: 24,
@@ -12,19 +12,20 @@ const sizeToPxValue = {
   largest: 48,
 }
 
-const avatarStyles: ComponentSlotStylesPrepared<AvatarProps, any> = {
+const avatarLabelStyles: ComponentSlotStylesPrepared<AvatarLabelProps, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(sizeToPxValue[size])
-
     return {
-      position: 'relative',
-      backgroundColor: 'inherit',
       display: 'inline-block',
-      verticalAlign: 'middle',
-      height: sizeInRem,
       width: sizeInRem,
+      height: sizeInRem,
+      lineHeight: sizeInRem,
+      fontSize: pxToRem(sizeToPxValue[size] / 2.333),
+      verticalAlign: 'top',
+      textAlign: 'center',
+      padding: '0px',
     }
   },
 }
 
-export default avatarStyles
+export default avatarLabelStyles

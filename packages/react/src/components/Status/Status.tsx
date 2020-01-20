@@ -40,7 +40,9 @@ export interface StatusProps extends UIComponentProps, ComposableProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = props => {
+const Status: React.FC<WithAsProp<StatusProps>> &
+  FluentComponentStaticProps &
+  ComposableProps = props => {
   const { className, color, icon, size, state, design, styles, variables } = props
 
   const compose = useComposedConfig(props)

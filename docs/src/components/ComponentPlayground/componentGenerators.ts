@@ -23,6 +23,10 @@ export const Avatar: KnobComponentGenerators<AvatarProps> = {
     name: propName,
     initialValue: _.capitalize(`${faker.name.firstName()} ${faker.name.lastName()}`),
   }),
+  // TODO: fix support for composed components
+  image: () => null,
+  label: () => null,
+  status: () => null,
 }
 
 export const Box: KnobComponentGenerators<BoxProps> = {

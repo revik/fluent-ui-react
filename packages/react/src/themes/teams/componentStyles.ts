@@ -7,6 +7,9 @@ export { default as Alert } from './components/Alert/alertStyles'
 export { default as Attachment } from './components/Attachment/attachmentStyles'
 
 export { default as Avatar } from './components/Avatar/avatarStyles'
+export { default as AvatarLabel } from './components/Avatar/avatarLabelStyles'
+export { default as AvatarImage } from './components/Avatar/avatarImageStyles'
+export { default as AvatarStatus } from './components/Avatar/avatarStatusStyles'
 
 export { default as Button } from './components/Button/buttonStyles'
 export { default as ButtonContent } from './components/Button/buttonContentStyles'
