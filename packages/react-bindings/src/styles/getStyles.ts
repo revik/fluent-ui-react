@@ -72,16 +72,6 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   const componentKey = [overrideStyles ? false : displayName, composeName].filter(Boolean).join(':')
   const cachingPossible = !(design || styles || variables)
 
-  if (allowsCache && cachingPossible) {
-    if (!variablesCache.has(theme)) {
-      variablesCache.set(theme, {})
-    }
-
-    if (!stylesCache.has(theme)) {
-      stylesCache.set(theme, {})
-    }
-  }
-
   //
   // VARIABLES
   //
@@ -185,8 +175,6 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
       resolvedStylesDebug = result.resolvedStylesDebug
       resolvedStyles = result.resolvedStyles
 
-      classes.root = cx(className, classes.root, className)
-
       themeStylesCache[stylesKey] = result
     }
   } else {
@@ -224,9 +212,9 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     classes = result.classes
     resolvedStylesDebug = result.resolvedStylesDebug
     resolvedStyles = result.resolvedStyles
-
-    classes.root = cx(componentClassName, classes.root, className)
   }
+
+  classes.root = cx(componentClassName, classes.root, className)
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
