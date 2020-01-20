@@ -1,11 +1,20 @@
 import { Accessibility, sliderBehavior, SliderBehaviorProps } from '@fluentui/accessibility'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStateManager,
+  useStyles,
+} from '@fluentui/react-bindings'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import { createSliderManager } from '@fluentui/state'
-import * as React from 'react'
+import cx from 'classnames'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@fluentui/react-proptypes'
-import { handleRef, Ref } from '@fluentui/react-component-ref'
-import cx from 'classnames'
+import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import {
   ChildrenComponentProps,
@@ -25,19 +34,10 @@ import {
   ProviderContextPrepared,
 } from '../../types'
 import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
-import Box, { BoxProps } from '../Box/Box'
-import {
-  getElementType,
-  getUnhandledProps,
-  useAccessibility,
-  useStateManager,
-  useStyles,
-} from '@fluentui/react-bindings'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+import SliderInput, { SliderInputProps } from './SliderInput'
 
 const processInputValues = (
-  p: Pick<SliderProps, 'min' | 'max'> & Pick<SliderState, 'value'>,
+  p: Pick<SliderProps, 'min' | 'max'> & { value: string },
 ): { min: number; max: number; value: number; valueAsPercentage: string } => {
   let min = _.toNumber(p.min)
   let max = _.toNumber(p.max)
@@ -82,7 +82,7 @@ export interface SliderProps
   getA11yValueMessageOnChange?: (props: SliderProps) => string
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue<BoxProps>
+  input?: ShorthandValue<SliderInputProps>
 
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>
@@ -112,10 +112,6 @@ export interface SliderProps
 
   /** A slider can be displayed vertically. */
   vertical?: boolean
-}
-
-export interface SliderState {
-  value: SliderProps['value']
 }
 
 const Slider: React.FC<WithAsProp<SliderProps>> &
@@ -150,7 +146,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
     }),
   })
 
-  const { classes, styles: resolvedStyles } = useStyles(Slider.displayName, {
+  const { classes } = useStyles(Slider.displayName, {
     className: Slider.className,
     mapPropsToStyles: () => ({
       fluid,
@@ -205,6 +201,24 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
   })
 
   // we need 2 wrappers around the slider rail, track, input and thumb slots to achieve correct component sizes
+
+  // @ts-ignore
+  const inputElement = SliderInput.create(input || type, {
+    defaultProps: () =>
+      getA11Props('input', {
+        ...htmlInputProps,
+        className: Slider.slotClassNames.input,
+        fluid,
+        min: htmlMin,
+        max: htmlMax,
+        step,
+        type,
+        value: htmlValue,
+        vertical,
+      }),
+    overrideProps: handleInputOverrides,
+  })
+
   return (
     <ElementType {...getA11Props('root', { className: classes.root, ...restProps })}>
       <div
@@ -225,21 +239,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
             handleRef(userInputRef, inputElement)
           }}
         >
-          {Box.create(input || type, {
-            defaultProps: () =>
-              getA11Props('input', {
-                ...htmlInputProps,
-                className: Slider.slotClassNames.input,
-                as: 'input',
-                min: htmlMin,
-                max: htmlMax,
-                step,
-                type,
-                value: htmlValue,
-                styles: resolvedStyles.input,
-              }),
-            overrideProps: handleInputOverrides,
-          })}
+          {inputElement}
         </Ref>
         {/* the thumb slot needs to appear after the input slot */}
         <span
@@ -251,6 +251,9 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
   )
 }
 
+Slider.className = 'ui-slider'
+Slider.displayName = 'Slider'
+
 Slider.slotClassNames = {
   input: `${Slider.className}__input`,
   inputWrapper: `${Slider.className}__input-wrapper`,
@@ -258,10 +261,6 @@ Slider.slotClassNames = {
   thumb: `${Slider.className}__thumb`,
   track: `${Slider.className}__track`,
 }
-
-Slider.displayName = 'Slider'
-
-Slider.className = 'ui-slider'
 
 Slider.propTypes = {
   ...commonPropTypes.createCommon({ content: false }),

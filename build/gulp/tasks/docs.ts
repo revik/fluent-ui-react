@@ -67,6 +67,7 @@ const componentsSrc = [
   '!**/AvatarLabel.tsx',
   '!**/AvatarImage.tsx',
   '!**/AvatarStatus.tsx',
+  '!**/SliderInput.tsx',
 ]
 const behaviorSrc = [`${paths.posix.packageSrc('accessibility')}/behaviors/*/[a-z]*Behavior.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`

@@ -8,6 +8,7 @@ import {
   EmbedProps,
   IconProps,
   ImageProps,
+  SliderProps,
   StatusProps,
   VideoProps,
 } from '@fluentui/react'
@@ -88,6 +89,11 @@ export const Image: KnobComponentGenerators<ImageProps> = {
     name: propName,
     initialValue: faker.image.avatar(),
   }),
+}
+
+export const Slider: KnobComponentGenerators<SliderProps> = {
+  // TODO: fix support for composed components
+  input: () => null,
 }
 
 export const Status: KnobComponentGenerators<StatusProps> = {

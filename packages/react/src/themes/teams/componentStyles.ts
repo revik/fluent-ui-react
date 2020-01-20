@@ -82,6 +82,7 @@ export { default as RadioGroupItem } from './components/RadioGroup/radioGroupIte
 export { default as Segment } from './components/Segment/segmentStyles'
 
 export { default as Slider } from './components/Slider/sliderStyles'
+export { default as SliderInput } from './components/Slider/sliderInputStyles'
 
 export { default as Reaction } from './components/Reaction/reactionStyles'
 export { default as ReactionGroup } from './components/Reaction/reactionGroupStyles'

@@ -10,6 +10,7 @@ export interface ButtonContentProps extends BoxProps {
 const ButtonContent = compose(Box, {
   displayName: 'ButtonContent',
   mapPropsToStyles: props => ({ size: props.size }),
+  overrideStyles: true,
 })
 
 // @ts-ignore
