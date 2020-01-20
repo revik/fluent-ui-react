@@ -214,8 +214,6 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     resolvedStyles = result.resolvedStyles
   }
 
-  classes.root = cx(componentClassName, classes.root, className)
-
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
     saveDebug({
@@ -244,6 +242,8 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
       }),
     })
   }
+
+  classes.root = cx(componentClassName, classes.__root, className)
 
   return {
     classes,

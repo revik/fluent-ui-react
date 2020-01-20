@@ -51,26 +51,29 @@ const resolveStylesAndClasses = (
       },
     })
 
-    Object.defineProperty(classes, slotName, {
+    const className = slotName === 'root' ? '__root' : slotName
+    const cacheClassKey = `${className}__return`
+
+    Object.defineProperty(classes, className, {
       enumerable: false,
       configurable: false,
       set(val) {
-        classes[cacheKey] = val
+        classes[cacheClassKey] = val
         return true
       },
       get() {
-        if (classes[cacheKey]) {
-          return classes[cacheKey]
+        if (classes[cacheClassKey]) {
+          return classes[cacheClassKey]
         }
 
         // this resolves the getter magic
         const styleObj = resolvedStyles[slotName]
 
         if (renderStyles && styleObj) {
-          classes[cacheKey] = renderStyles(styleObj)
+          classes[cacheClassKey] = renderStyles(styleObj)
         }
 
-        return classes[cacheKey]
+        return classes[cacheClassKey]
       },
     })
   })
