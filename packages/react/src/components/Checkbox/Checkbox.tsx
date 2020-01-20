@@ -170,30 +170,32 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
     }),
   })
 
-  const checkbox = toggle
-    ? // @ts-ignore
-      CheckboxToggleIcon.create(icon, {
-        defaultProps: () => ({
-          checked: state.checked,
-          disabled,
-          labelPosition,
-          outline: !state.checked,
-          size: 'medium',
-          className: Checkbox.slotClassNames.indicator,
-          name: 'icon-circle',
-        }),
-      })
-    : // @ts-ignore
-      CheckboxIcon.create(icon, {
-        defaultProps: () => ({
-          checked: state.checked,
-          disabled,
-          labelPosition,
-          size: 'smaller',
-          className: Checkbox.slotClassNames.indicator,
-          name: 'icon-checkmark',
-        }),
-      })
+  // @ts-ignore
+  const toggleElement = CheckboxToggleIcon.create(icon, {
+    defaultProps: () => ({
+      checked: state.checked,
+      disabled,
+      labelPosition,
+      outline: !state.checked,
+      size: 'medium',
+      className: Checkbox.slotClassNames.indicator,
+      name: 'icon-circle',
+    }),
+  })
+
+  // @ts-ignore
+  const checkboxElement = CheckboxIcon.create(icon, {
+    defaultProps: () => ({
+      checked: state.checked,
+      disabled,
+      labelPosition,
+      size: 'smaller',
+      className: Checkbox.slotClassNames.indicator,
+      name: 'icon-checkmark',
+    }),
+  })
+
+  const checkbox = toggle ? toggleElement : checkboxElement
 
   setEnd()
 
