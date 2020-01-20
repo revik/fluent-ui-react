@@ -6,16 +6,18 @@ import {
 } from '@fluentui/styles'
 import { ComponentSlotClasses } from '../styles/types'
 
+export type ResolveStylesResult = {
+  resolvedStyles: Record<string, ICSSInJSStyle>
+  resolvedStylesDebug: Record<string, { styles: Object }[]>
+  classes: ComponentSlotClasses
+}
+
 // Both resolvedStyles and classes are objects of getters with lazy evaluation
 const resolveStylesAndClasses = (
   mergedStyles: ComponentSlotStylesPrepared,
   styleParam: ComponentStyleFunctionParam,
   renderStyles: (styles: ICSSInJSStyle) => string,
-): {
-  resolvedStyles: ICSSInJSStyle
-  resolvedStylesDebug: Record<string, { styles: Object }[]>
-  classes: ComponentSlotClasses
-} => {
+): ResolveStylesResult => {
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
   const classes: Record<string, string> = {}

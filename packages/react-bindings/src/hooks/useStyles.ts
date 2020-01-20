@@ -88,6 +88,8 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     theme: context.theme,
     _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
 
+    // Only for useStyles()
+    __experimental_cache: true,
     __experimental_composeName,
     __experimental_overrideStyles,
   })
