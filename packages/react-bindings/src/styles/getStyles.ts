@@ -86,16 +86,16 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
       variablesCache.set(theme, {})
     }
 
-    if (themeVariableCache[componentKey]) {
-      resolvedVariables = themeVariableCache[componentKey]
-    } else {
-      resolvedVariables = mergeComponentVariables(
+    if (!themeVariableCache[componentKey]) {
+      themeVariableCache[componentKey] = mergeComponentVariables(
         theme.componentVariables[displayName],
         composeName && theme.componentVariables[composeName],
       )(theme.siteVariables)
-
-      themeVariableCache[componentKey] = resolvedVariables
     }
+
+    resolvedVariables = themeVariableCache[componentKey]
+
+    variablesCache.set(theme, themeVariableCache)
   } else {
     //
     // Old caching of variables
@@ -176,6 +176,8 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
       resolvedStyles = result.resolvedStyles
 
       themeStylesCache[stylesKey] = result
+
+      stylesCache.set(theme, themeStylesCache)
     }
   } else {
     // Resolve styles using resolved variables, merge results, allow props.styles to override

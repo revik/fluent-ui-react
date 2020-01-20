@@ -111,7 +111,7 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
       circular,
       color,
       disabled,
-      name,
+      // name,
       outline,
       rotate,
       size,
