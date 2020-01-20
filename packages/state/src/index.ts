@@ -1,3 +1,4 @@
+export * from './managers/checkboxManager'
 export * from './managers/dialogManager'
 export * from './managers/dropdownManager'
 
