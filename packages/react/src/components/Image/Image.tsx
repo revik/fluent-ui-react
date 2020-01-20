@@ -5,6 +5,7 @@ import {
   ImageBehaviorProps,
 } from '@fluentui/accessibility'
 import {
+  ComposableProps,
   getElementType,
   getUnhandledProps,
   useAccessibility,
@@ -24,7 +25,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 
-export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
+export interface ImageProps extends UIComponentProps, ImageBehaviorProps, ComposableProps {
   /** Alternative text. */
   alt?: string
 
@@ -60,6 +61,7 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
     variables,
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
+
   const compose = useComposedConfig(props)
   const getA11Props = useAccessibility(accessibility, {
     debugName: Image.displayName,
