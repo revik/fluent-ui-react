@@ -43,7 +43,12 @@ function fluentFabricComparision(danger, markdown, warn) {
   )
 
   const getStatus = fluentToFabric =>
-    fluentToFabric > 1 ? '🔧' : fluentToFabric >= 0.7 ? '🎯' : '🦄'
+    [
+      fluentToFabric <= 0.5 && '⚡',
+      fluentToFabric <= 0.7 && '🦄',
+      fluentToFabric <= 1 && '🎯',
+      '🔧',
+    ].find(c => c)
 
   markdown(
     [
@@ -62,7 +67,7 @@ function fluentFabricComparision(danger, markdown, warn) {
           value.numTicks,
         ].join(' | '),
       ),
-      '>🔧 Needs work &nbsp; &nbsp; 🎯 On target &nbsp; &nbsp; 🦄 Amazing',
+      '>🔧 Needs work &nbsp; &nbsp; 🎯 On target &nbsp; &nbsp; 🦄 Amazing &nbsp; &nbsp; ⚡ Blazing',
     ].join('\n'),
   )
 }
