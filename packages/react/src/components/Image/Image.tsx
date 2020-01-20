@@ -8,6 +8,7 @@ import {
   getElementType,
   getUnhandledProps,
   useAccessibility,
+  useComposedConfig,
   useStyles,
 } from '@fluentui/react-bindings'
 import * as PropTypes from 'prop-types'
@@ -59,7 +60,7 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
     variables,
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
-
+  const compose = useComposedConfig(props)
   const getA11Props = useAccessibility(accessibility, {
     debugName: Image.displayName,
     mapPropsToBehavior: () => ({
@@ -82,6 +83,9 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
       variables,
     }),
     rtl: context.rtl,
+
+    __experimental_composeName: compose.displayName,
+    __experimental_overrideStyles: compose.overrideStyles,
   })
 
   const ElementType = getElementType(props)
