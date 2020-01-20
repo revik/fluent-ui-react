@@ -163,6 +163,7 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
     }
   }
 
+  // @ts-ignore
   const labelElement = CheckboxLabel.create(label, {
     defaultProps: () => ({
       labelPosition,
@@ -170,7 +171,8 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
   })
 
   const checkbox = toggle
-    ? CheckboxToggleIcon.create(icon, {
+    ? // @ts-ignore
+      CheckboxToggleIcon.create(icon, {
         defaultProps: () => ({
           checked: state.checked,
           disabled,
@@ -181,7 +183,8 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
           name: 'icon-circle',
         }),
       })
-    : CheckboxIcon.create(icon, {
+    : // @ts-ignore
+      CheckboxIcon.create(icon, {
         defaultProps: () => ({
           checked: state.checked,
           disabled,

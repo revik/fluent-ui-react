@@ -1,7 +1,6 @@
 import { compose } from '@fluentui/react-bindings'
-import * as React from 'react'
 
-import { createShorthandFactory, ShorthandFactory } from '../../utils'
+import { createShorthandFactory } from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 
@@ -11,9 +10,7 @@ export interface CheckboxToggleIconProps extends IconProps {
   labelPosition?: 'start' | 'end'
 }
 
-const CheckboxToggleIcon: React.ComponentType<CheckboxToggleIconProps> & {
-  create: ShorthandFactory<CheckboxToggleIconProps>
-} = compose(Icon, {
+const CheckboxToggleIcon = compose<CheckboxToggleIconProps>(Icon, {
   displayName: 'CheckboxToggleIcon',
   mapPropsToStyles: props => ({
     outline: props.outline,

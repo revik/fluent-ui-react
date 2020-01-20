@@ -1,16 +1,13 @@
 import { compose } from '@fluentui/react-bindings'
 
-import { createShorthandFactory, ShorthandFactory } from '../../utils'
+import { createShorthandFactory } from '../../utils'
 import Text, { TextProps } from '../Text/Text'
-import * as React from 'react'
 
 export interface CheckboxLabelProps extends TextProps {
   labelPosition?: 'start' | 'end'
 }
 
-const CheckboxLabel: React.ComponentType<CheckboxLabelProps> & {
-  create: ShorthandFactory<CheckboxLabelProps>
-} = compose<CheckboxLabelProps>(Text, {
+const CheckboxLabel = compose<CheckboxLabelProps>(Text, {
   displayName: 'CheckboxLabel',
   mapPropsToStyles: props => ({ labelPosition: props.labelPosition }),
 })
