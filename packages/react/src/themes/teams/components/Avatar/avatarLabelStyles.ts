@@ -16,6 +16,13 @@ const avatarLabelStyles: ComponentSlotStylesPrepared<AvatarLabelProps, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(sizeToPxValue[size])
     return {
+      alignItems: 'center',
+      overflow: 'hidden',
+
+      color: 'rgba(0, 0, 0, 0.6)',
+      background: 'rgb(232, 232, 232)',
+
+      borderRadius: '9999px',
       display: 'inline-block',
       width: sizeInRem,
       height: sizeInRem,

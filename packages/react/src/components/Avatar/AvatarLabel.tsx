@@ -1,13 +1,13 @@
 import { compose } from '@fluentui/react-bindings'
 
 import { createShorthandFactory, SizeValue } from '../../utils'
-import Label, { LabelProps } from '../Label/Label'
+import Box, { BoxProps } from '../Box/Box'
 
-export interface AvatarLabelProps extends LabelProps {
+export interface AvatarLabelProps extends BoxProps {
   size?: SizeValue
 }
 
-const AvatarLabel = compose(Label, {
+const AvatarLabel = compose(Box, {
   displayName: 'AvatarLabel',
   mapPropsToStyles: props => ({ size: props.size }),
 })
