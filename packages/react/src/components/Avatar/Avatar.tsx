@@ -104,7 +104,6 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
     defaultProps: () =>
       getA11Props('label', {
         content: getInitials(name),
-        circular: true,
         title: name,
         size,
       }),
