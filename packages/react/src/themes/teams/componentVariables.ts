@@ -13,6 +13,9 @@ export { default as ChatItem } from './components/Chat/chatItemVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Checkbox } from './components/Checkbox/checkboxVariables'
+export { default as CheckboxIcon } from './components/Checkbox/checkboxVariables'
+export { default as CheckboxToggleIcon } from './components/Checkbox/checkboxVariables'
+export { default as CheckboxLabel } from './components/Checkbox/checkboxVariables'
 
 export { default as Dialog } from './components/Dialog/dialogVariables'
 

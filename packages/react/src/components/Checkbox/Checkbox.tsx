@@ -29,8 +29,10 @@ import {
   ProviderContextPrepared,
   FluentComponentStaticProps,
 } from '../../types'
-import Icon, { IconProps } from '../Icon/Icon'
-import Text, { TextProps } from '../Text/Text'
+import { IconProps } from '../Icon/Icon'
+import CheckboxLabel, { CheckboxLabelProps } from './CheckboxLabel'
+import CheckboxIcon from './CheckboxIcon'
+import CheckboxToggleIcon from './CheckboxToggleIcon'
 import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 
 export interface CheckboxSlotClassNames {
@@ -55,7 +57,7 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   icon?: ShorthandValue<IconProps>
 
   /** A checkbox can render a label next to its indicator. */
-  label?: ShorthandValue<TextProps>
+  label?: ShorthandValue<CheckboxLabelProps>
 
   /** A checkbox's label can be rendered in different positions. */
   labelPosition?: 'start' | 'end'
@@ -119,7 +121,7 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
     },
     rtl: context.rtl,
   })
-  const { classes, styles: resolvedStyles } = useStyles(Checkbox.displayName, {
+  const { classes } = useStyles(Checkbox.displayName, {
     className: Checkbox.className,
     mapPropsToStyles: () => ({
       checked: state.checked,
@@ -161,12 +163,34 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
     }
   }
 
-  const labelElement = Text.create(label, {
+  const labelElement = CheckboxLabel.create(label, {
     defaultProps: () => ({
-      styles: resolvedStyles.label,
-      className: Checkbox.slotClassNames.label,
+      labelPosition,
     }),
   })
+
+  const checkbox = toggle
+    ? CheckboxToggleIcon.create(icon, {
+        defaultProps: () => ({
+          checked: state.checked,
+          disabled,
+          labelPosition,
+          outline: !state.checked,
+          size: 'medium',
+          className: Checkbox.slotClassNames.indicator,
+          name: 'icon-circle',
+        }),
+      })
+    : CheckboxIcon.create(icon, {
+        defaultProps: () => ({
+          checked: state.checked,
+          disabled,
+          labelPosition,
+          size: 'smaller',
+          className: Checkbox.slotClassNames.indicator,
+          name: 'icon-checkmark',
+        }),
+      })
 
   setEnd()
 
@@ -180,15 +204,7 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
       })}
     >
       {labelPosition === 'start' && labelElement}
-      {Icon.create(icon, {
-        defaultProps: () => ({
-          outline: toggle && !state.checked,
-          size: toggle ? 'medium' : 'smaller',
-          className: Checkbox.slotClassNames.indicator,
-          name: toggle ? 'icon-circle' : 'icon-checkmark',
-          styles: toggle ? resolvedStyles.toggle : resolvedStyles.checkbox,
-        }),
-      })}
+      {checkbox}
       {labelPosition === 'end' && labelElement}
     </ElementType>
   )
