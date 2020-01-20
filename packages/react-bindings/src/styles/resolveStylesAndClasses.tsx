@@ -3,11 +3,12 @@ import {
   isDebugEnabled,
   ICSSInJSStyle,
   ComponentStyleFunctionParam,
+  ComponentSlotStylesResolved,
 } from '@fluentui/styles'
 import { ComponentSlotClasses } from '../styles/types'
 
 export type ResolveStylesResult = {
-  resolvedStyles: Record<string, ICSSInJSStyle>
+  resolvedStyles: ComponentSlotStylesResolved
   resolvedStylesDebug: Record<string, { styles: Object }[]>
   classes: ComponentSlotClasses
 }
